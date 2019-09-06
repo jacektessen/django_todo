@@ -132,6 +132,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# CORS_ORIGIN_WHITELIST = 'http://localhost:3000'
-
 AUTH_USER_MODEL = 'tasks.UserProfile'
+
+CORS_ORIGIN_WHITELIST = ['http://localhost:3000']

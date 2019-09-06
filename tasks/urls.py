@@ -9,9 +9,16 @@
 #     path('', include(router.urls))
 # ]
 
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from tasks import views
+
+router = DefaultRouter()
+router.register('hello-viewset', views.HelloViewSet, base_name='hello-viewset')
+router.register('v1/tasks', views.TaskView, base_name='tasks')
+
 
 urlpatterns = [
   path('hello-view/', views.HelloApiView.as_view()),
+  path('', include(router.urls))
 ]
