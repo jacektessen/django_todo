@@ -7,4 +7,8 @@ from .models import Task
 #     fields = '__all__'
 
 
+class HelloSerializer(serializers.Serializer):
+    """Serializes a name field for testing out APIView"""
+    name = serializers.CharField(max_length=10)
+
 
