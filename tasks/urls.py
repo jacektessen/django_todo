@@ -15,7 +15,8 @@ from tasks import views
 
 router = DefaultRouter()
 router.register('hello-viewset', views.HelloViewSet, base_name='hello-viewset')
-router.register('v1/tasks', views.TaskView, base_name='tasks')
+router.register('v1/tasks', views.TaskView)
+router.register('profile', views.UserProfileViewSet)
 
 
 urlpatterns = [
