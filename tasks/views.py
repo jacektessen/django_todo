@@ -20,6 +20,64 @@ class TaskView(viewsets.ModelViewSet):
 
 
 
+class ListTasks(APIView):
+  
+  def get(self, request, format=None):
+    count = Task.objects.all().count()
+    tasks = []
+    for value in Task.objects.all():
+
+      data_value = {
+          "id": value.id,
+          "name": value.name,
+          "content": value.content,
+          "column": value.column,
+          "created at": value.created_at,
+          "completed": value.completed,
+          "user_id": "user.id"
+        }
+      
+      tasks.append(data_value)
+
+    an_apiview = {
+      "ok": True,
+      "data": {
+        "tasks": 
+          tasks,
+        "users": []
+      },
+      "total_count_tasks": count
+    }
+
+    return Response(an_apiview)
+
+
+
+class TaskById(APIView):
+  
+  def get(self, request, task_id, format=None):
+    tasks = {}
+    value = Task.objects.get(id=task_id)
+    count = Task.objects.all().count()
+
+    tasks[value.id] = {
+      "model": "Task",
+      "length": count,
+      "tasks": {
+        "id": value.id,
+        "name": value.name,
+        "content": value.content,
+        "column": value.column,
+        "created at": value.created_at,
+        "completed": value.completed,
+      }
+    }
+
+    return Response(tasks)
+
+
+
+
 class HelloApiView(APIView):
   """Test API View"""
   serializer_class = serializers.HelloSerializer

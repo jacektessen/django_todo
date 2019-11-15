@@ -1,0 +1,5 @@
+mysqlclient
+Django
+django-cors-headers
+django-rest-auth
+djangorestframework
