@@ -1,11 +1,19 @@
 from rest_framework import serializers
 from tasks import models
 
-class TaskSerializer(serializers.ModelSerializer):
 
-  class Meta:
-    model = models.Task
-    fields = '__all__'
+class TasksSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Tasks
+        fields = '__all__'
+
+
+class ColumnsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Columns
+        fields = '__all__'
 
 
 class HelloSerializer(serializers.Serializer):
@@ -14,28 +22,24 @@ class HelloSerializer(serializers.Serializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-  """Serializes a user profile object"""
+    """Serializes a user profile object"""
 
-  class Meta:
-    model = models.UserProfile
-    fields = ('id', 'email', 'name', 'password')
-    extra_kwargs = {
-      'password': {
-        'write_only': True,
-        'style': {'input_type': 'password'}
-      }
-    }
+    class Meta:
+        model = models.UserProfile
+        fields = ('id', 'email', 'name', 'password')
+        extra_kwargs = {
+            'password': {
+                'write_only': True,
+                'style': {'input_type': 'password'}
+            }
+        }
 
-  def create(self, validated_data):
-    """Create and return a new user"""
-    user = models.UserProfile.objects.create_user(
-      email = validated_data['email'],
-      name = validated_data['name'],
-      password = validated_data['password']
-    )
+    def create(self, validated_data):
+        """Create and return a new user"""
+        user = models.UserProfile.objects.create_user(
+            email=validated_data['email'],
+            name=validated_data['name'],
+            password=validated_data['password']
+        )
 
-    return user
-
-
-
-
+        return user

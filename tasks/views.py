@@ -1,133 +1,130 @@
-from rest_framework.views import APIView 
+from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status 
+from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import filters
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
 
-from .models import Task
-from tasks import serializers
-from .serializers import TaskSerializer
-from tasks import models
+from .models import Tasks, Columns, UserProfile
+from .serializers import TasksSerializer, ColumnsSerializer, UserProfileSerializer, HelloSerializer
 from tasks import permissions
 
 
-class TaskView(viewsets.ModelViewSet):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
+class TasksView(viewsets.ModelViewSet):
+    queryset = Tasks.objects.all()
+    serializer_class = TasksSerializer
 
+
+class ColumnsView(viewsets.ModelViewSet):
+    queryset = Columns.objects.all()
+    serializer_class = ColumnsSerializer
 
 
 class ListTasks(APIView):
-  
-  def get(self, request, format=None):
-    count = Task.objects.all().count()
-    tasks = []
-    for value in Task.objects.all():
 
-      data_value = {
-          "id": value.id,
-          "name": value.name,
-          "content": value.content,
-          "column": value.column,
-          "created at": value.created_at,
-          "completed": value.completed,
-          "user_id": "user.id"
+    def get(self, request, format=None):
+        count = Tasks.objects.all().count()
+        tasks = []
+        for value in Tasks.objects.all():
+            data_value = {
+                "id": value.id,
+                "name": value.name,
+                "content": value.content,
+                "column": value.column,
+                "order_no": value.order_no,
+                "created at": value.created_at,
+                "completed": value.completed,
+                "user_id": "user.id"
+            }
+
+            tasks.append(data_value)
+
+        an_apiview = {
+            "ok": True,
+            "data": {
+                "tasks":
+                tasks,
+                "users": []
+            },
+            "total_count_tasks": count
         }
-      
-      tasks.append(data_value)
 
-    an_apiview = {
-      "ok": True,
-      "data": {
-        "tasks": 
-          tasks,
-        "users": []
-      },
-      "total_count_tasks": count
-    }
-
-    return Response(an_apiview)
-
+        return Response(an_apiview)
 
 
 class TaskById(APIView):
-  
-  def get(self, request, task_id, format=None):
-    tasks = {}
-    value = Task.objects.get(id=task_id)
-    count = Task.objects.all().count()
 
-    tasks[value.id] = {
-      "model": "Task",
-      "length": count,
-      "tasks": {
-        "id": value.id,
-        "name": value.name,
-        "content": value.content,
-        "column": value.column,
-        "created at": value.created_at,
-        "completed": value.completed,
-      }
-    }
+    def get(self, request, task_id, format=None):
+        value = Tasks.objects.get(id=task_id)
+        count = Tasks.objects.all().count()
 
-    return Response(tasks)
+        task = {
+            "model": "Task",
+            "length": count,
+            "task": {
+                "id": value.id,
+                "name": value.name,
+                "content": value.content,
+                "column": value.column,
+                "created at": value.created_at,
+                "completed": value.completed,
+            }
+        }
 
-
+        return Response(task)
 
 
 class HelloApiView(APIView):
-  """Test API View"""
-  serializer_class = serializers.HelloSerializer
+    """Test API View"""
+    serializer_class = HelloSerializer
 
-  def get(self, request, format=None):
-    """Returns a list of APIView features"""
+    def get(self, request, format=None):
+        """Returns a list of APIView features"""
 
-    an_apiview = [
-        'Uses HTTP methods as functions (get, post, patch, put, delete)',
-        'Is similar to a traditional Django View',
-        'Gives you the most control over your logic',
-        'Is mapped manually to URLs',
-    ]
+        an_apiview = [
+            'Uses HTTP methods as functions (get, post, patch, put, delete)',
+            'Is similar to a traditional Django View',
+            'Gives you the most control over your logic',
+            'Is mapped manually to URLs',
+        ]
 
-    return Response({'message': 'Hello!', 'an_apiview': an_apiview})
+        return Response({'message': 'Hello!', 'an_apiview': an_apiview})
 
-  def post(self, request):
-    """Create a hello message with our name"""
-    serializer = self.serializer_class(data=request.data)
+    def post(self, request):
+        """Create a hello message with our name"""
+        serializer = self.serializer_class(data=request.data)
 
-    if serializer.is_valid():
-      name = serializer.validated_data.get('name')
-      message = f'Hello {name}'
-      return Response({'message': message})
-    else:
-      return Response(
-        serializer.errors,
-        status = status.HTTP_400_BAD_REQUEST
-        )
+        if serializer.is_valid():
+            name = serializer.validated_data.get('name')
+            message = f'Hello {name}'
+            return Response({'message': message})
+        else:
+            return Response(
+                serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-  def put(self, request, pk=None):
-      """Handle updating an object"""
+    def put(self, request, pk=None):
+        """Handle updating an object"""
 
-      return Response({'method': 'PUT'})
+        return Response({'method': 'PUT'})
 
-  def patch(self, request, pk=None):
-      """Handle partial update of object"""
+    def patch(self, request, pk=None):
+        """Handle partial update of object"""
 
-      return Response({'method': 'PATCH'})
+        return Response({'method': 'PATCH'})
 
-  def delete(self, request, pk=None):
-      """Delete an object"""
+    def delete(self, request, pk=None):
+        """Delete an object"""
 
-      return Response({'method': 'DELETE'})    
-
+        return Response({'method': 'DELETE'})
 
 
 class HelloViewSet(viewsets.ViewSet):
     """Test API ViewSet"""
-    serializer_class = serializers.HelloSerializer
+    serializer_class = HelloSerializer
 
     def list(self, request):
         """Return a hello message."""
@@ -174,19 +171,16 @@ class HelloViewSet(viewsets.ViewSet):
         return Response({'http_method': 'DELETE'})
 
 
-
 class UserProfileViewSet(viewsets.ModelViewSet):
     """Handle creating, creating and updating profiles"""
-    serializer_class = serializers.UserProfileSerializer
-    queryset = models.UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+    queryset = UserProfile.objects.all()
     authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.UpdateOwnProfile,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name', 'email',)
 
 
-
 class UserLoginApiView(ObtainAuthToken):
-   """Handle creating user authentication tokens"""
-   renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
-
+    """Handle creating user authentication tokens"""
+    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
