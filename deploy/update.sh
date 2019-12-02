@@ -2,7 +2,7 @@
 
 set -e
 
-PROJECT_BASE_PATH='/usr/local/apps/django_todo'
+PROJECT_BASE_PATH='/usr/local/apps/django_todo2'
 
 git pull
 $PROJECT_BASE_PATH/env/bin/python manage.py migrate
