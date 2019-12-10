@@ -5,7 +5,7 @@ set -e
 # TODO: Set to URL of git repo.
 PROJECT_GIT_URL='https://github.com/jacektessen/django_todo.git'
 
-PROJECT_BASE_PATH='/usr/local/apps/django_todo2'
+PROJECT_BASE_PATH='/usr/local/apps/django_todo'
 # PROJECT_BASE_PATH='\Users\jacek\Projects\ToDo\django_todo'
 
 echo "Installing dependencies..."
