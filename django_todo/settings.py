@@ -26,6 +26,7 @@ SECRET_KEY = 'rxg-lxrtcdr_lelm70^6l#ti*m72u2$9omybf%9r^0+w71l73v'
 # DEBUG = True
 DEBUG = bool(int(os.environ.get('DEBUG', 1)))
 
+# Production:
 ALLOWED_HOSTS = [
     'ec2-18-218-21-247.us-east-2.compute.amazonaws.com', '127.0.0.1']
 
@@ -34,6 +35,7 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     'tasks',
+    'user',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -59,10 +61,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'django_todo.urls'
 
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,19 +85,6 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'NAME': 'django_todo2',
-#         'ENGINE': 'django.db.backends.mysql',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#         'OPTIONS': {
-#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-#         },
-#     }
-# }
 
 DATABASES = {
     'default': {
@@ -141,8 +132,27 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'tasks.UserProfile'
+AUTH_USER_MODEL = 'user.UserProfile'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+SESSION_COOKIE_AGE = 360 * 60
 
 CORS_ORIGIN_WHITELIST = ['http://localhost:3000', 'http://localhost:3001']
 
+CORS_ALLOW_CREDENTIALS = True
+
 STATIC_ROOT = 'static/'
+
+JWT_AUTH = {
+    'JWT_RESPONSE_PAYLOAD_HANDLER':   'django_todo.utils.custom_jwt_response_handler'
+}
