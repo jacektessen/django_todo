@@ -28,7 +28,7 @@ DEBUG = bool(int(os.environ.get('DEBUG', 1)))
 
 # Production:
 ALLOWED_HOSTS = [
-    'ec2-3-136-86-24.us-east-2.compute.amazonaws.com', '127.0.0.1']
+    'ec2-3-136-86-24.us-east-2.compute.amazonaws.com', '127.0.0.1', "ec2-13-58-239-36.us-east-2.compute.amazonaws.com"]
 
 
 # Application definition
@@ -148,7 +148,7 @@ REST_FRAMEWORK = {
 SESSION_COOKIE_AGE = 360 * 60
 
 CORS_ORIGIN_WHITELIST = ['http://localhost:3000',
-                         'http://localhost:3001', 'http://react-todo-jt.herokuapp.com']
+                         'http://localhost:3001', 'http://react-todo-jt.herokuapp.com', 'https://react-todo-jt.herokuapp.com']
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -159,4 +159,4 @@ JWT_AUTH = {
 }
 
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = True
