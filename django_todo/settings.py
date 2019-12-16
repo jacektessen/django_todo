@@ -158,5 +158,5 @@ JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER':   'django_todo.utils.custom_jwt_response_handler'
 }
 
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
