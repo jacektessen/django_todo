@@ -13,7 +13,7 @@ class Tasks(models.Model):
     order_no = models.IntegerField(default=-1)
     created_at = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField(default=False)
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, default=2)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, default=1)
 
     class Meta:
         verbose_name_plural = "Tasks"
