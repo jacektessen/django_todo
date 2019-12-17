@@ -30,9 +30,12 @@ class ColumnsView(viewsets.ModelViewSet):
 class ListTasks(APIView):
 
     def get(self, request, format=None):
-        count = Tasks.objects.all().count()
+        count = Tasks.objects.filter(user=request.user.id).count()
+        print("request user", request.user.id)
+        print("count", count)
         tasks = []
-        for value in Tasks.objects.all():
+        for value in Tasks.objects.filter(user=request.user.id):
+            print("value", value.user.id)
             data_value = {
                 "id": value.id,
                 "name": value.name,
@@ -41,7 +44,7 @@ class ListTasks(APIView):
                 "order_no": value.order_no,
                 "created at": value.created_at,
                 "completed": value.completed,
-                "user_id": "user.id"
+                "user_id": value.user.id
             }
 
             tasks.append(data_value)
@@ -63,11 +66,11 @@ class TaskById(APIView):
 
     def get(self, request, task_id, format=None):
         value = Tasks.objects.get(id=task_id)
-        count = Tasks.objects.all().count()
+        if request.user.id != value.user.id:
+            return Response("No Permission")
 
         task = {
             "model": "Task",
-            "length": count,
             "task": {
                 "id": value.id,
                 "name": value.name,
@@ -75,6 +78,7 @@ class TaskById(APIView):
                 "column": value.column,
                 "created at": value.created_at,
                 "completed": value.completed,
+                "user": value.user.id
             }
         }
 
