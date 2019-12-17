@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,8 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'rxg-lxrtcdr_lelm70^6l#ti*m72u2$9omybf%9r^0+w71l73v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = bool(int(os.environ.get('DEBUG', 1)))
+# DEBUG = True
+DEBUG = bool(int(os.environ.get('DEBUG', 1)))
 
 # Production:
 ALLOWED_HOSTS = [
@@ -160,3 +161,5 @@ JWT_AUTH = {
 
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # SECURE_SSL_REDIRECT = True
+
+django_heroku.settings(locals())
