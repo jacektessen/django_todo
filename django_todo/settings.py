@@ -28,8 +28,8 @@ SECRET_KEY = 'rxg-lxrtcdr_lelm70^6l#ti*m72u2$9omybf%9r^0+w71l73v'
 DEBUG = bool(int(os.environ.get('DEBUG', 1)))
 
 # Production:
-ALLOWED_HOSTS = [
-    'ec2-3-136-86-24.us-east-2.compute.amazonaws.com', '127.0.0.1', "ec2-13-58-239-36.us-east-2.compute.amazonaws.com", "django-todo-jt.herokuapp.com"]
+# ALLOWED_HOSTS = [
+#     'ec2-3-136-86-24.us-east-2.compute.amazonaws.com', '127.0.0.1', "ec2-13-58-239-36.us-east-2.compute.amazonaws.com", "django-todo-jt.herokuapp.com"]
 
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework.authtoken',
+    "storages",
 
 ]
 
