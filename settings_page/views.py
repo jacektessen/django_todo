@@ -25,7 +25,8 @@ class UsersSettings(APIView):
                 "panel_3": settings.panel_3,
                 "panel_4": settings.panel_4,
                 "language": settings.language,
-                "user": settings.user.id
+                "user": settings.user.id,
+                "id": settings.id
             }
         }
         return Response(response)
