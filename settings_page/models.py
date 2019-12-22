@@ -17,6 +17,8 @@ class SettingsPage(models.Model):
     panel_2_name = models.CharField(max_length=255, default="Normal")
     panel_3_name = models.CharField(max_length=255, default="Later")
     panel_4_name = models.CharField(max_length=255, default="Done")
+    shadow_effect = models.BooleanField(default=False)
+
     language = models.CharField(
         max_length=255, choices=LANGUAGES, default="EN")
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, default=1)
