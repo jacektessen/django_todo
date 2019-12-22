@@ -8,7 +8,7 @@ from user.models import UserProfile
 
 class Tasks(models.Model):
     name = models.CharField(max_length=255)
-    content = models.CharField(max_length=255, default="")
+    content = models.CharField(max_length=255, default="", blank=True)
     column = models.CharField(max_length=255, default="column2")
     order_no = models.IntegerField(default=-1)
     created_at = models.DateTimeField(auto_now_add=True)
