@@ -13,10 +13,13 @@ class SettingsPage(models.Model):
     panel_2_color = models.CharField(max_length=255, default="#fff176")
     panel_3_color = models.CharField(max_length=255, default="#ffeef2")
     panel_4_color = models.CharField(max_length=255, default="#90ee90")
-    panel_1_name = models.CharField(max_length=255, default="Important")
-    panel_2_name = models.CharField(max_length=255, default="Normal")
-    panel_3_name = models.CharField(max_length=255, default="Later")
-    panel_4_name = models.CharField(max_length=255, default="Done")
+    panel_1_name = models.CharField(
+        max_length=255, default="Important", blank=True)
+    panel_2_name = models.CharField(
+        max_length=255, default="Normal", blank=True)
+    panel_3_name = models.CharField(
+        max_length=255, default="Later", blank=True)
+    panel_4_name = models.CharField(max_length=255, default="Done", blank=True)
     shadow_effect = models.BooleanField(default=False)
 
     language = models.CharField(
