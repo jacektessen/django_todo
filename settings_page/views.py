@@ -20,10 +20,10 @@ class UsersSettings(APIView):
         response = {
             "model": "SettingsPage",
             "settings": {
-                "panel_1": settings.panel_1,
-                "panel_2": settings.panel_2,
-                "panel_3": settings.panel_3,
-                "panel_4": settings.panel_4,
+                "panel_1_color": settings.panel_1_color,
+                "panel_2_color": settings.panel_2_color,
+                "panel_3_color": settings.panel_3_color,
+                "panel_4_color": settings.panel_4_color,
                 "language": settings.language,
                 "user": settings.user.id,
                 "id": settings.id
